@@ -26,19 +26,23 @@ app.get("/START/", function (req, res) {
   });
 });
 
-app.get("/game/:id/:move/", function (req, res) {
+app.get("/game/:id/:column/", function (req, res) {
   model.findOne({ _id: req.params.id }, function (err, doc) {
     if (err) {
       res.status(500).send("Something went wrong!!!");
-    } else if (!req.params.move || req.params.move > 6) {
+    } else if (
+      !req.params.column ||
+      req.params.column > 6 ||
+      req.params.column < 0
+    ) {
       res.status(500).send("Not a valid move!");
     } else if (doc != null) {
-      var move = Number(req.params.move);
-      var emptyIndex = doc.gameMatrix[move].findIndex((x) => x == 0);
+      var column = Number(req.params.column);
+      var emptyIndex = doc.gameMatrix[column].findIndex((x) => x == 0);
       if (emptyIndex == -1) {
         res.status(500).send("Not a valid move!");
       } else {
-        doc.gameMatrix[move][emptyIndex] = doc.active;
+        doc.gameMatrix[column][emptyIndex] = doc.active;
         var userId = doc.active;
         var user = userId == 1 ? "Yellow" : "Red";
         var isWinner = checkIfUserWins(userId, doc.gameMatrix);
