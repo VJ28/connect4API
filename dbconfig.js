@@ -1,8 +1,9 @@
 var mongoose = require("mongoose");
-var dbRoute =
-  "mongodb+srv://vijay:vijaymourya@cluster0-nsvjo.mongodb.net/connect4?retryWrites=true&w=majority";
 
-mongoose.connect(dbRoute, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.DBRoute, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
 var dbConnection = mongoose.connection;
 dbConnection.once("open", function () {
   console.log("connected to the database");
