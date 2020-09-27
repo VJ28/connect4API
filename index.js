@@ -76,6 +76,6 @@ app.get("/game/:id/:move/", function (req, res) {
   });
 });
 
-app.listen(5002, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("Connect 4 API Connected!!!");
 });
